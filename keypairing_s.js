@@ -12,3 +12,16 @@ var newpubkey = new sjcl.ecc.ecdsa.publicKey(curve, point);
 // see the signature and verify it
 console.log("sign: "+sjcl.codec.base64.fromBits(signature));
 console.log("verified: "+newpubkey.verify(hash, signature));
+
+//-----------------------
+
+var pubkey_hex = sjcl.codec.hex.fromBits(keys.pub.get().x) + sjcl.codec.hex.fromBits(keys.pub.get().y);
+var seckey_hex = sjcl.codec.hex.fromBits(keys.sec.get());
+
+// Unserialize and create a public key object with sjcl
+var public_key = new sjcl.ecc.ecdsa.publicKey(curve, sjcl.codec.hex.toBits(pubkey_hex));
+
+// Unserialize and create a private key object
+var secret_key_bn = new sjcl.bn(seckey_hex);
+var secret_key = new sjcl.ecc.ecdsa.secretKey(curve, secret_key_bn);
+
