@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+  <head>
+      <!-- Include Dexie -->
+      <script src="./dexie.js"></script>
+
+      <script>
+          //
+          // Define the database
+          //
+          var db = new Dexie("thesis_database");
+          db.version(1).stores({
+              users: 'username,passwd'
+          });
+
+          //
+          // Input data
+          //
+          db.users.put({username: "Amir", passwd: 123456}).then (function(){
+              //
+              // After data is stored, read it
+              //
+              return db.users.get('Amir');
+          }).then(function (user) {
+              //
+              // Display the result
+              //
+              //alert (user.username + " password is " + user.passwd);
+			    console.log (user.username + " password is " + user.passwd);
+          }).catch(function(error) {
+             //
+             // Finally don't forget to catch any error
+             // that could have happened anywhere in the
+             // code blocks above.
+             //
+             alert ("Ooops: " + error);
+          });
+      </script>
+  </head>
+</html>
